@@ -4,6 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.UserEntity
 
 @Database(entities = [UserEntity::class], version = 1)
 abstract class RoomUserDataSource : RoomDatabase() {
