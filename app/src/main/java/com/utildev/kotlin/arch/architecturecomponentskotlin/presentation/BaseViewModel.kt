@@ -14,5 +14,4 @@ class BaseViewModel: ViewModel() {
     init {
         MyApplication.appComponent.inject(this)
     }
-
 }
