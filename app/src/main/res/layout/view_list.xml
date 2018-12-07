@@ -8,13 +8,6 @@
                 name="viewModel"
                 type="com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.BaseViewModel"/>
 
-        <variable
-                name="adapter"
-                type="android.support.v7.widget.RecyclerView.Adapter"/>
-
-        <variable
-                name="layoutManager"
-                type="android.support.v7.widget.RecyclerView.LayoutManager"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -33,9 +26,7 @@
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/viewList_rvContent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:adapter="@{adapter}"
-                    app:layoutManager="@{layoutManager}"/>
+                    android:layout_height="match_parent"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

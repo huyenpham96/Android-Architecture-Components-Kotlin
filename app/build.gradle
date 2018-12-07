@@ -32,12 +32,12 @@ android {
         develop {
             dimension "version"
             applicationId "com.utildev.kotlin.arch.architecturecomponentskotlin"
-            buildConfigField "String", "BASE_URL", "\"http://api.develop.com\""
+            buildConfigField "String", "BASE_URL", "\"https://api.stackexchange.com/2.2/\""
         }
         staging {
             dimension "version"
             applicationId "com.utildev.kotlin.arch.architecturecomponentskotlin"
-            buildConfigField "String", "BASE_URL", "\"http://api.staging.com\""
+            buildConfigField "String", "BASE_URL", "\"https://api.stackexchange.com/2.2/\""
         }
         product {
             dimension "version"

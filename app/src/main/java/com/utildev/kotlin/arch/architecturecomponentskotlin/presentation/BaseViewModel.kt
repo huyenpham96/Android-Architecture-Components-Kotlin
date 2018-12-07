@@ -11,7 +11,7 @@ import javax.inject.Inject
 open class BaseViewModel: ViewModel() {
     @Inject
     lateinit var repository: AppRepository
-    private var compositeDisposable = CompositeDisposable()
+    var compositeDisposable = CompositeDisposable()
 
     val loadingView: ObservableInt = ObservableInt(View.GONE)
 
