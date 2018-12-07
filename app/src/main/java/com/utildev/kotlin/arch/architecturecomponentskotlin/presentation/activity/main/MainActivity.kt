@@ -3,7 +3,9 @@ package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.activi
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.widget.Toast
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
+import com.utildev.kotlin.arch.architecturecomponentskotlin.common.utils.AppUtils
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.ActivityMainBinding
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.activity.BaseActivity
 
