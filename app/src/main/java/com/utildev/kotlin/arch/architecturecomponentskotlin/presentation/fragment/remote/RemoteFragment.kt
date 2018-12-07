@@ -5,20 +5,20 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.FragmentRemoteBinding
-import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.UserSEAdapter
+import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.BaseAdapter
+import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.UserRemoteAdapter
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_remote.view.*
 import kotlinx.android.synthetic.main.view_list.view.*
 
-class RemoteFragment : BaseFragment(), UserSEAdapter.AdapterListener {
+class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     private lateinit var viewModel: RemoteViewModel
-    private lateinit var userAdapter: UserSEAdapter
+    private var userRemoteAdapter: UserRemoteAdapter? = null
     private val linearLayoutManager = GridLayoutManager(context, 1)
     private var page = 1
 
@@ -36,18 +36,20 @@ class RemoteFragment : BaseFragment(), UserSEAdapter.AdapterListener {
         view.fragRemote_list.viewList_rvContent.run {
             layoutManager = linearLayoutManager
             setHasFixedSize(true)
-            adapter = userAdapter
+            adapter = userRemoteAdapter
         }
     }
 
     private fun init(view: View) {
-        userAdapter = UserSEAdapter(view.fragRemote_list.viewList_rvContent, linearLayoutManager, this)
+        userRemoteAdapter = UserRemoteAdapter(
+            R.layout.item_user, view.fragRemote_list.viewList_rvContent, linearLayoutManager, this
+        )
 
         viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", page, true)
         viewModel.userListSE?.observe(this, Observer {
             if (it != null) {
-                userAdapter.setLoading(true)
-                userAdapter.setItems(it.items!!)
+                userRemoteAdapter!!.setLoading(true)
+                userRemoteAdapter!!.addAll(it.items!!)
             }
         })
     }
