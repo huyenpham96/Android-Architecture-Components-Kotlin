@@ -47,7 +47,7 @@ class RoomFragment : BaseFragment(), BaseAdapter.AdapterListener {
         viewModel.getAllUser()
         viewModel.userLiveData?.observe(this, Observer {
             if (it != null) {
-                roomAdapter!!.add(it)
+                roomAdapter!!.set(it)
             }
         })
 
