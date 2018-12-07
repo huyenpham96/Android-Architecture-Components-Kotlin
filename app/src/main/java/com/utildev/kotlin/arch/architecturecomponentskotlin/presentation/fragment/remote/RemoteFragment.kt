@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.FragmentRemoteBinding
-import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.UserSEAdapter
+import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.UserSEAdapter
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_remote.view.*
 import kotlinx.android.synthetic.main.view_list.view.*

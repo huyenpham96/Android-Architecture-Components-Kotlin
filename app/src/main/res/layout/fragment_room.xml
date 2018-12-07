@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <variable name="viewModel"
-                  type="com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.room.RoomViewModel"/>
+
+        <variable
+                name="viewModel"
+                type="com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.room.RoomViewModel"/>
+
     </data>
+
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ff0">
+            android:background="#ffffff">
+
+        <TextView
+                android:id="@+id/fragRoom_tvCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/colorPrimary"
+                bind:layout_constraintEnd_toEndOf="parent"
+                bind:layout_constraintStart_toStartOf="parent"
+                bind:layout_constraintTop_toTopOf="parent"/>
+
+        <include
+                android:id="@+id/fragRoom_list"
+                layout="@layout/view_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                bind:layout_constraintBottom_toBottomOf="parent"
+                bind:layout_constraintEnd_toEndOf="parent"
+                bind:layout_constraintStart_toStartOf="parent"
+                bind:layout_constraintTop_toBottomOf="@id/fragRoom_tvCount"
+                bind:viewModel="@{viewModel}"/>
+
+        <include
+                layout="@layout/view_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                bind:layout_constraintBottom_toBottomOf="parent"
+                bind:layout_constraintEnd_toEndOf="parent"
+                bind:layout_constraintStart_toStartOf="parent"
+                bind:layout_constraintTop_toTopOf="parent"
+                bind:viewModel="@{viewModel}"/>
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fragRoom_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="10dp"
+                bind:layout_constraintBottom_toBottomOf="parent"
+                bind:layout_constraintEnd_toEndOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

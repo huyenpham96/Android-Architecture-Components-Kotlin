@@ -1,4 +1,4 @@
-package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation
+package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -9,16 +9,18 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.BR
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
 import com.utildev.kotlin.arch.architecturecomponentskotlin.data.remote.stackexchange.RestItem
 
-class UserSEAdapter: RecyclerView.Adapter<UserSEAdapter.ViewHolder>() {
-    private var items: List<RestItem>? = emptyList()
+class UserSEAdapter : RecyclerView.Adapter<UserSEAdapter.ViewHolder>() {
+    private var items: List<RestItem> = emptyList()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int) =
-        ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.context), R.layout.item_user, viewGroup, false))
+        ViewHolder(
+            DataBindingUtil.inflate(LayoutInflater.from(viewGroup.context), R.layout.item_user, viewGroup, false)
+        )
 
-    override fun getItemCount() = items!!.size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val restItem = items!![position]
+        val restItem = items[position]
         holder.bind(restItem)
     }
 
@@ -27,7 +29,7 @@ class UserSEAdapter: RecyclerView.Adapter<UserSEAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val viewDataBinding: ViewDataBinding):RecyclerView.ViewHolder(viewDataBinding.root) {
+    class ViewHolder(private val viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
         fun bind(restItem: RestItem) {
             viewDataBinding.setVariable(BR.viewModel, restItem)
             viewDataBinding.executePendingBindings()
