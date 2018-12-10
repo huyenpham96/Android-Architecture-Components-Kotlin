@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
+import com.utildev.kotlin.arch.architecturecomponentskotlin.common.extensions.isNetworkAvailable
 import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.Github
 import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.UserEntity
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.FragmentRoomBinding
@@ -50,6 +51,7 @@ class RoomFragment : BaseFragment(), BaseAdapter.AdapterListener {
         binding.viewModel = viewModel
         mView = binding.root
         init()
+        Toast.makeText(context, "${isNetworkAvailable(context!!)}", Toast.LENGTH_SHORT).show()
         return mView
     }
 

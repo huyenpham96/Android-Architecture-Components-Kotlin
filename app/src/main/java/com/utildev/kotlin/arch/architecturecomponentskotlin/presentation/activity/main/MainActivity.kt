@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.widget.Toast
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
+import com.utildev.kotlin.arch.architecturecomponentskotlin.common.extensions.isNetworkAvailable
 import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.Github
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.ActivityMainBinding
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.activity.BaseActivity
@@ -20,6 +21,8 @@ class MainActivity : BaseActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         binding.viewModel = viewModel
+        mySharedPreferences.putString("aaa", "hello")
+        Toast.makeText(this, mySharedPreferences.getString("aaa"), Toast.LENGTH_SHORT).show()
     }
 
     override fun onStart() {

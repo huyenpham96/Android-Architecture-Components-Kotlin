@@ -1,10 +1,24 @@
 package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.activity
 
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
+import com.utildev.kotlin.arch.architecturecomponentskotlin.common.MySharedPreferences
+import com.utildev.kotlin.arch.architecturecomponentskotlin.di.MyApplication
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.BaseFragment
+import javax.inject.Inject
 
+@SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
+    @Inject
+    lateinit var mySharedPreferences: MySharedPreferences
+
+    init {
+        MyApplication.appComponent.inject(this)
+    }
+
     private fun transactionFragment(
         fragment: BaseFragment,
         replace: Boolean,
