@@ -49,4 +49,8 @@ open class BaseActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
         }
     }
+
+    fun clearStack() {
+        supportFragmentManager.popBackStack()
+    }
 }

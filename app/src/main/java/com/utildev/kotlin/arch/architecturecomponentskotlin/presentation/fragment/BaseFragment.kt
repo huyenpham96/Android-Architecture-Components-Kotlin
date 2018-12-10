@@ -37,6 +37,12 @@ open class BaseFragment : Fragment() {
         }
     }
 
+    fun clearStack() {
+        if (activity is BaseActivity) {
+            (activity as BaseActivity).clearStack()
+        }
+    }
+
     interface FragmentResultListener {
         fun onFragmentResult(code: Int, bundle: Bundle)
     }

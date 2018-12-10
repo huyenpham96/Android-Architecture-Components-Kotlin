@@ -2,13 +2,16 @@ package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragme
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
+import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.Github
 import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.UserEntity
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.FragmentRoomBinding
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.BaseAdapter
@@ -16,12 +19,30 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_room.view.*
 import kotlinx.android.synthetic.main.view_list.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class RoomFragment : BaseFragment(), BaseAdapter.AdapterListener {
     private lateinit var viewModel: RoomViewModel
     private var roomAdapter: UserRoomAdapter? = null
-    private val linearLayoutManager = GridLayoutManager(context, 1)
+    private var linearLayoutManager: GridLayoutManager? = null
     private lateinit var mView: View
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(github: Github) {
+        Toast.makeText(context, "evenbus", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentRoomBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_room, container, false)
@@ -42,6 +63,7 @@ class RoomFragment : BaseFragment(), BaseAdapter.AdapterListener {
     }
 
     private fun init() {
+        linearLayoutManager = GridLayoutManager(context, 1)
         roomAdapter = UserRoomAdapter(R.layout.item_room, mView.fragRoom_list.viewList_rvContent, null, this)
 
         viewModel.getAllUser()

@@ -8,6 +8,7 @@
                   type="com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.activity.main.MainViewModel"/>
     </data>
     <android.support.constraint.ConstraintLayout
+            android:id="@+id/actMain_clContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -56,6 +57,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Github"
+                    android:onClick="@{viewModel::onClickGithub}"
                     android:textColor="#ffffff"/>
 
         </LinearLayout>
@@ -64,7 +66,7 @@
                 android:id="@+id/flContainer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                bind:layout_constraintBottom_toBottomOf="parent"
+                bind:layout_constraintBottom_toTopOf="@id/actMain_viewBottom"
                 bind:layout_constraintEnd_toEndOf="parent"
                 bind:layout_constraintStart_toStartOf="parent"
                 bind:layout_constraintTop_toTopOf="parent"/>
