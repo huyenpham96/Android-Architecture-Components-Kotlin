@@ -13,6 +13,7 @@ class MyApplication : Application() {
             .appModule(AppModule(this))
             .remoteModule(RemoteModule())
             .roomModule(RoomModule())
+            .sharedPreferencesModule(SharedPreferencesModule())
             .build()
     }
 }
