@@ -29,8 +29,8 @@ open class BaseActivity : AppCompatActivity() {
             val fmTransaction = supportFragmentManager.beginTransaction()
             if (animation) {
                 fmTransaction.setCustomAnimations(
-                    R.anim.slide_enter_from_right, R.anim.slide_exit_to_left,
-                    R.anim.slide_enter_from_left, R.anim.slide_exit_to_right
+                    R.anim.activity_new_in, R.anim.activity_old_out,
+                    R.anim.activity_old_in, R.anim.activity_new_out
                 )
             } else {
                 fmTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
