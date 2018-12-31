@@ -3,6 +3,7 @@ package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapte
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.utildev.kotlin.arch.architecturecomponentskotlin.BR
+import java.lang.Exception
 
 class UserRoomAdapter(
     layoutId: Int,
@@ -12,8 +13,10 @@ class UserRoomAdapter(
 ) : BaseAdapter(layoutId, recyclerView, layoutManager, adapterListener) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val itemRoom = items[position]
-        holder.binding.setVariable(BR.viewModel, itemRoom)
-        holder.binding.executePendingBindings()
+        try {
+            val itemRoom = items[position]
+            holder.binding.setVariable(BR.viewModel, itemRoom)
+            holder.binding.executePendingBindings()
+        } catch (e: Exception) {}
     }
 }

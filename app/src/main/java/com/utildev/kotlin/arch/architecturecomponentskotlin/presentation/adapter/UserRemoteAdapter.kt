@@ -3,6 +3,7 @@ package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapte
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.utildev.kotlin.arch.architecturecomponentskotlin.BR
+import java.lang.Exception
 
 class UserRemoteAdapter(
     layoutId: Int,
@@ -12,8 +13,10 @@ class UserRemoteAdapter(
 ) : BaseAdapter(layoutId, recyclerView, layoutManager, adapterListener) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val restItem = items[position]
-        holder.binding.setVariable(BR.viewModel, restItem)
-        holder.binding.executePendingBindings()
+        try {
+            val restItem = items[position]
+            holder.binding.setVariable(BR.viewModel, restItem)
+            holder.binding.executePendingBindings()
+        } catch (e: Exception) {}
     }
 }

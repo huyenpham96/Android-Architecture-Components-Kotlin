@@ -18,7 +18,6 @@ open class BaseAdapter(
     private var isLoading = true
 
     companion object {
-        const val VIEW_TYPE_ITEM = 555
         const val VIEW_TYPE_LOADING = 111
     }
 
@@ -50,28 +49,33 @@ open class BaseAdapter(
         return if (viewType == VIEW_TYPE_LOADING) {
             BaseAdapter.ViewHolder(
                 DataBindingUtil.inflate(
-                    LayoutInflater.from(viewGroup.context),
-                    R.layout.view_loadmore,
-                    viewGroup,
-                    false
+                    LayoutInflater.from(viewGroup.context), R.layout.view_loadmore, viewGroup, false
                 )
             )
         } else {
             BaseAdapter.ViewHolder(
-                DataBindingUtil.inflate(LayoutInflater.from(viewGroup.context), layoutId, viewGroup, false)
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(viewGroup.context), layoutId, viewGroup, false
+                )
             )
         }
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int {
+        return if (layoutManager == null) {
+            items.size
+        } else {
+            items.size + 1
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (layoutManager != null) {
-            if (position + 1 == layoutManager.itemCount) {
+            if (position == layoutManager.itemCount - 1) {
                 VIEW_TYPE_LOADING
-            } else VIEW_TYPE_ITEM
+            } else position
         } else {
-            super.getItemViewType(position)
+            position
         }
     }
 

@@ -14,7 +14,7 @@ class MainViewModel : BaseViewModel() {
             (view.context as BaseActivity).replaceFragment(RemoteFragment(), true, true)
         } else if (view.context is ContextWrapper) {
             ((view.context as ContextWrapper).baseContext as BaseActivity)
-                .addFragment(RemoteFragment(), true, true)
+                .replaceFragment(RemoteFragment(), true, true)
         }
     }
 
@@ -23,7 +23,7 @@ class MainViewModel : BaseViewModel() {
             (view.context as BaseActivity).addFragment(RoomFragment(), true, true)
         } else if (view.context is ContextWrapper) {
             ((view.context as ContextWrapper).baseContext as BaseActivity)
-                .addFragment(RoomFragment(), true, true)
+                .replaceFragment(RoomFragment(), true, true)
         }
     }
 
@@ -32,7 +32,7 @@ class MainViewModel : BaseViewModel() {
             (view.context as BaseActivity).replaceFragment(GithubFragment(), true, true)
         } else if (view.context is ContextWrapper) {
             ((view.context as ContextWrapper).baseContext as BaseActivity)
-                .addFragment(GithubFragment(), true, true)
+                .replaceFragment(GithubFragment(), true, true)
         }
     }
 }

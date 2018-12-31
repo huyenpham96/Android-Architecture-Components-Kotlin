@@ -1,4 +1,4 @@
-package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter
+package com.utildev.kotlin.arch.architecturecomponentskotlin.common.extensions
 
 import android.annotation.SuppressLint
 import android.databinding.BindingAdapter

@@ -5,10 +5,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
+import com.utildev.kotlin.arch.architecturecomponentskotlin.data.remote.stackexchange.RestItem
+import com.utildev.kotlin.arch.architecturecomponentskotlin.data.remote.stackexchange.RestUser
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.FragmentRemoteBinding
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.BaseAdapter
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.UserRemoteAdapter
@@ -19,8 +22,10 @@ import kotlinx.android.synthetic.main.view_list.view.*
 class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     private lateinit var viewModel: RemoteViewModel
     private var userRemoteAdapter: UserRemoteAdapter? = null
-    private val linearLayoutManager = GridLayoutManager(context, 1)
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private var page = 1
+
+    private var list: MutableList<RestItem> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentRemoteBinding =
@@ -41,6 +46,7 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     }
 
     private fun init(view: View) {
+        linearLayoutManager = GridLayoutManager(context, 1)
         userRemoteAdapter = UserRemoteAdapter(
             R.layout.item_user, view.fragRemote_list.viewList_rvContent, linearLayoutManager, this
         )
@@ -48,8 +54,9 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
         viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", page, true)
         viewModel.userListSE?.observe(this, Observer {
             if (it != null) {
+                list.addAll(it.items!!)
                 userRemoteAdapter!!.setLoading(true)
-                userRemoteAdapter!!.addAll(it.items!!)
+                userRemoteAdapter!!.addAll(list)
             }
         })
     }

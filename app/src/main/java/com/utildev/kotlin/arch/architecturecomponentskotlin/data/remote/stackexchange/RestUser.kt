@@ -7,7 +7,7 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.data.BaseModel
 class RestUser : BaseModel() {
     @SerializedName("items")
     @Expose
-    val items: List<RestItem>? = null
+    val items: MutableList<RestItem>? = null
     @SerializedName("has_more")
     @Expose
     val hasMore: Boolean? = null
