@@ -25,7 +25,7 @@ class MainViewModel : BaseViewModel() {
 
     fun onClickRoom(view: View?) {
         if (view!!.context is BaseActivity) {
-            (view.context as BaseActivity).addFragment(RoomFragment(), true, true)
+            (view.context as BaseActivity).replaceFragment(RoomFragment(), true, true)
         } else if (view.context is ContextWrapper) {
             ((view.context as ContextWrapper).baseContext as BaseActivity)
                 .replaceFragment(RoomFragment(), true, true)

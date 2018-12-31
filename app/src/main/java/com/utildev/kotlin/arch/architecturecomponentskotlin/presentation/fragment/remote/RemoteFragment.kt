@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,12 +52,19 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
             userRemoteAdapter = UserRemoteAdapter(
                 R.layout.item_user, view.fragRemote_list.viewList_rvContent, linearLayoutManager, this
             )
-            viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", page, true)
+            if (viewModel.userListSE == null) {
+                viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
+            } else {
+                list.addAll(viewModel.list)
+                userRemoteAdapter!!.setLoading(true)
+                userRemoteAdapter!!.set(list)
+            }
         }
 
         viewModel.userListSE?.observe(this, Observer {
             if (it != null) {
-                list.addAll(it.items!!)
+                list.clear()
+                list.addAll(it)
                 userRemoteAdapter!!.setLoading(true)
                 userRemoteAdapter!!.set(list)
             }
@@ -72,6 +80,6 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     }
 
     override fun onLoadMore() {
-        viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++page, false)
+        viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++viewModel.page, false)
     }
 }
