@@ -23,6 +23,10 @@
                 bind:layout_constraintTop_toTopOf="parent"
                 bind:viewModel="@{viewModel}"/>
 
+        <Button android:id="@+id/actMain_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         <LinearLayout
                 android:id="@+id/actMain_viewBottom"
                 android:layout_width="match_parent"

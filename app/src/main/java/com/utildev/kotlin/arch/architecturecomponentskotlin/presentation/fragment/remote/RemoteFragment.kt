@@ -47,16 +47,18 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
 
     private fun init(view: View) {
         linearLayoutManager = GridLayoutManager(context, 1)
-        userRemoteAdapter = UserRemoteAdapter(
-            R.layout.item_user, view.fragRemote_list.viewList_rvContent, linearLayoutManager, this
-        )
+        if (userRemoteAdapter == null) {
+            userRemoteAdapter = UserRemoteAdapter(
+                R.layout.item_user, view.fragRemote_list.viewList_rvContent, linearLayoutManager, this
+            )
+            viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", page, true)
+        }
 
-        viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", page, true)
         viewModel.userListSE?.observe(this, Observer {
             if (it != null) {
                 list.addAll(it.items!!)
                 userRemoteAdapter!!.setLoading(true)
-                userRemoteAdapter!!.addAll(list)
+                userRemoteAdapter!!.set(list)
             }
         })
     }
