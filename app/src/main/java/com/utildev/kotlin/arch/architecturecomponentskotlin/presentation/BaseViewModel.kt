@@ -8,7 +8,8 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.di.MyApplication
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-open class BaseViewModel: ViewModel() {
+@Suppress("LeakingThis")
+open class BaseViewModel : ViewModel() {
     @Inject
     lateinit var repository: AppRepository
     var compositeDisposable = CompositeDisposable()
@@ -19,13 +20,13 @@ open class BaseViewModel: ViewModel() {
         MyApplication.appComponent.inject(this)
     }
 
-    fun showLoading(view: View?) {
+    fun showLoading() {
         if (loadingView.get() != View.VISIBLE) {
             loadingView.set(View.VISIBLE)
         }
     }
 
-    fun dismissLoading(view: View?) {
+    fun dismissLoading() {
         if (loadingView.get() != View.GONE) {
             loadingView.set(View.GONE)
         }

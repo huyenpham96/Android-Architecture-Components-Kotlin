@@ -10,6 +10,7 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.di.MyApplication
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.BaseFragment
 import javax.inject.Inject
 
+@Suppress("LeakingThis")
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
     @Inject

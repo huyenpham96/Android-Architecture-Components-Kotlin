@@ -6,13 +6,11 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.utildev.kotlin.arch.architecturecomponentskotlin.R
 import com.utildev.kotlin.arch.architecturecomponentskotlin.data.remote.stackexchange.RestItem
-import com.utildev.kotlin.arch.architecturecomponentskotlin.data.remote.stackexchange.RestUser
 import com.utildev.kotlin.arch.architecturecomponentskotlin.databinding.FragmentRemoteBinding
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.BaseAdapter
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter.UserRemoteAdapter
@@ -24,7 +22,6 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     private lateinit var viewModel: RemoteViewModel
     private var userRemoteAdapter: UserRemoteAdapter? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private var page = 1
 
     private var list: MutableList<RestItem> = ArrayList()
 
@@ -55,7 +52,7 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
             if (viewModel.userListSE == null) {
                 viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
             } else {
-                list.addAll(viewModel.list)
+                list.addAll(viewModel.storeList)
                 userRemoteAdapter!!.setLoading(true)
                 userRemoteAdapter!!.set(list)
             }
