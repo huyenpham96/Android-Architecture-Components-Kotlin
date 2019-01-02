@@ -80,7 +80,7 @@
                 app:layout_constraintStart_toEndOf="@id/itemUser_flAvatar"
                 app:layout_constraintTop_toBottomOf="@id/itemUser_tvLocation" />
 
-        <include
+        <include android:id="@+id/itemUser_decorator"
                 layout="@layout/view_decorator"
                 android:layout_width="0dp"
                 android:layout_height="0.5dp"

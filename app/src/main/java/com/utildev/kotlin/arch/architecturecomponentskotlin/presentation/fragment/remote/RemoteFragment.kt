@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.view_list.view.*
 
 class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     private lateinit var viewModel: RemoteViewModel
+    private lateinit var rootView: View
     private var userRemoteAdapter: UserRemoteAdapter? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -30,8 +31,9 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
             DataBindingUtil.inflate(inflater, R.layout.fragment_remote, container, false)
         viewModel = ViewModelProviders.of(this).get(RemoteViewModel::class.java)
         binding.viewModel = viewModel
-        init(binding.root)
-        return binding.root
+        rootView = binding.root
+        init()
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,26 +45,36 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
         }
     }
 
-    private fun init(view: View) {
+    private fun init() {
         linearLayoutManager = GridLayoutManager(context, 1)
         if (userRemoteAdapter == null) {
             userRemoteAdapter = UserRemoteAdapter(
-                R.layout.item_user, view.fragRemote_list.viewList_rvContent, linearLayoutManager, this
+                R.layout.item_user, rootView.fragRemote_list.viewList_rvContent, linearLayoutManager, this
             )
             if (viewModel.userListSE == null) {
                 viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
             } else {
                 list.addAll(viewModel.storeList)
-                userRemoteAdapter!!.setLoading(true)
+                userRemoteAdapter!!.isLoading = true
                 userRemoteAdapter!!.set(list)
             }
+        }
+
+        rootView.fragRemote_list.viewList_srLayout.setOnRefreshListener {
+            viewModel.page = 1
+            viewModel.storeList.clear()
+            list.clear()
+            userRemoteAdapter!!.set(list)
+            userRemoteAdapter!!.isEndList = false
+            viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
+            rootView.fragRemote_list.viewList_srLayout.isRefreshing = false
         }
 
         viewModel.userListSE?.observe(this, Observer {
             if (it != null) {
                 list.clear()
                 list.addAll(it)
-                userRemoteAdapter!!.setLoading(true)
+                userRemoteAdapter!!.isLoading = true
                 userRemoteAdapter!!.set(list)
             }
         })
@@ -77,6 +89,10 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     }
 
     override fun onLoadMore() {
-        viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++viewModel.page, false)
+        if (list.size < 100) {
+            viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++viewModel.page, false)
+        } else {
+            userRemoteAdapter!!.isEndList = true
+        }
     }
 }

@@ -15,7 +15,8 @@ open class BaseAdapter(
     private val adapterListener: BaseAdapter.AdapterListener?
 ) : RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
     internal var items: MutableList<Any> = ArrayList()
-    private var isLoading = true
+    var isLoading = true
+    var isEndList = false
 
     companion object {
         const val VIEW_TYPE_LOADING = 999
@@ -112,10 +113,6 @@ open class BaseAdapter(
     fun clear() {
         this.items.clear()
         notifyDataSetChanged()
-    }
-
-    fun setLoading(loading: Boolean) {
-        this.isLoading = loading
     }
 
     class ViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
