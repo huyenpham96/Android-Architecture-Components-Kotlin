@@ -7,6 +7,7 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.data.remote.ApiServi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -28,6 +29,10 @@ class RemoteModule {
             .readTimeout(5, TimeUnit.MINUTES)
             .writeTimeout(5, TimeUnit.MINUTES)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor { chain ->
+                val request: Request = chain.request().newBuilder().addHeader("", "").build()
+                chain.proceed(request)
+            }
             .build()
 
     @Provides
@@ -42,5 +47,5 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit) = retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 }
