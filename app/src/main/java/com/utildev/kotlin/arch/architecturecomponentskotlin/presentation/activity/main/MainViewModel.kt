@@ -12,33 +12,33 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragmen
 import com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.fragment.room.RoomFragment
 
 class MainViewModel : BaseViewModel() {
-    var ob: SingleLiveEvent<Int> = SingleLiveEvent()
+  var ob: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    fun onCLickRemote(view: View?) {
-        if (view!!.context is BaseActivity) {
-            (view.context as BaseActivity).replaceFragment(RemoteFragment(), true, true)
-        } else if (view.context is ContextWrapper) {
-            ((view.context as ContextWrapper).baseContext as BaseActivity)
-                .replaceFragment(RemoteFragment(), true, true)
-        }
+  fun onCLickRemote(view: View?) {
+    if (view!!.context is BaseActivity) {
+      (view.context as BaseActivity).replaceFragment(RemoteFragment(), true, true)
+    } else if (view.context is ContextWrapper) {
+      ((view.context as ContextWrapper).baseContext as BaseActivity)
+        .replaceFragment(RemoteFragment(), true, true)
     }
+  }
 
-    fun onClickRoom(view: View?) {
-        if (view!!.context is BaseActivity) {
-            (view.context as BaseActivity).replaceFragment(RoomFragment(), true, true)
-        } else if (view.context is ContextWrapper) {
-            ((view.context as ContextWrapper).baseContext as BaseActivity)
-                .replaceFragment(RoomFragment(), true, true)
-        }
+  fun onClickRoom(view: View?) {
+    if (view!!.context is BaseActivity) {
+      (view.context as BaseActivity).replaceFragment(RoomFragment(), true, true)
+    } else if (view.context is ContextWrapper) {
+      ((view.context as ContextWrapper).baseContext as BaseActivity)
+        .replaceFragment(RoomFragment(), true, true)
     }
+  }
 
-    fun onClickGithub(view: View?) {
+  fun onClickGithub(view: View?) {
 //        if (view!!.context is BaseActivity) {
 //            (view.context as BaseActivity).replaceFragment(GithubFragment(), true, true)
 //        } else if (view.context is ContextWrapper) {
 //            ((view.context as ContextWrapper).baseContext as BaseActivity)
 //                .replaceFragment(GithubFragment(), true, true)
 //        }
-        ob.value = 1
-    }
+    ob.value = 1
+  }
 }

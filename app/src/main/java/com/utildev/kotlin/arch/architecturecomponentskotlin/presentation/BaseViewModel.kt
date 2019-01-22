@@ -10,25 +10,25 @@ import javax.inject.Inject
 
 @Suppress("LeakingThis")
 open class BaseViewModel : ViewModel() {
-    @Inject
-    lateinit var repository: AppRepository
-    var compositeDisposable = CompositeDisposable()
+  @Inject
+  lateinit var repository: AppRepository
+  var compositeDisposable = CompositeDisposable()
 
-    val loadingView: ObservableInt = ObservableInt(View.GONE)
+  val loadingView: ObservableInt = ObservableInt(View.GONE)
 
-    init {
-        MyApplication.appComponent.inject(this)
+  init {
+    MyApplication.appComponent.inject(this)
+  }
+
+  fun showLoading() {
+    if (loadingView.get() != View.VISIBLE) {
+      loadingView.set(View.VISIBLE)
     }
+  }
 
-    fun showLoading() {
-        if (loadingView.get() != View.VISIBLE) {
-            loadingView.set(View.VISIBLE)
-        }
+  fun dismissLoading() {
+    if (loadingView.get() != View.GONE) {
+      loadingView.set(View.GONE)
     }
-
-    fun dismissLoading() {
-        if (loadingView.get() != View.GONE) {
-            loadingView.set(View.GONE)
-        }
-    }
+  }
 }

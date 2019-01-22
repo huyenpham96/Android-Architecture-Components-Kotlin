@@ -14,19 +14,19 @@ import kotlinx.android.synthetic.main.fragment_github.view.*
 import org.greenrobot.eventbus.EventBus
 
 class GithubFragment : BaseFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentGithubBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_github, container, false)
-        val viewModel = ViewModelProviders.of(this).get(GithubViewModel::class.java)
-        binding.viewModel = viewModel
-        return binding.root
-    }
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val binding: FragmentGithubBinding =
+      DataBindingUtil.inflate(inflater, R.layout.fragment_github, container, false)
+    val viewModel = ViewModelProviders.of(this).get(GithubViewModel::class.java)
+    binding.viewModel = viewModel
+    return binding.root
+  }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.fragGithub_btBack.setOnClickListener {
-            EventBus.getDefault().post(Github("Architecture Components", "evenbus", "github.com"))
-            clearStack()
-        }
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    view.fragGithub_btBack.setOnClickListener {
+      EventBus.getDefault().post(Github("Architecture Components", "evenbus", "github.com"))
+      clearStack()
     }
+  }
 }

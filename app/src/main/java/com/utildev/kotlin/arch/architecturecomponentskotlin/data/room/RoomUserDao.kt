@@ -10,15 +10,15 @@ import io.reactivex.Flowable
 
 @Dao
 interface RoomUserDao {
-    @Query("SELECT COUNT(*) FROM $TABLE_NAME")
-    fun getUserCount(): Flowable<Int>
+  @Query("SELECT COUNT(*) FROM $TABLE_NAME")
+  fun getUserCount(): Flowable<Int>
 
-    @Query("SELECT * FROM $TABLE_NAME")
-    fun getAllUser(): Flowable<List<UserEntity>>
+  @Query("SELECT * FROM $TABLE_NAME")
+  fun getAllUser(): Flowable<List<UserEntity>>
 
-    @Insert
-    fun insertUser(userEntity: UserEntity)
+  @Insert
+  fun insertUser(userEntity: UserEntity)
 
-    @Delete
-    fun deleteUser(userEntity: UserEntity)
+  @Delete
+  fun deleteUser(userEntity: UserEntity)
 }

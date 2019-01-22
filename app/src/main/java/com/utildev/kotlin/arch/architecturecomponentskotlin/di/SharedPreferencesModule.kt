@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Module
 class SharedPreferencesModule {
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
+  @Provides
+  @Singleton
+  fun provideSharedPreferences(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
 }

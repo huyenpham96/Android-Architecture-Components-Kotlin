@@ -6,17 +6,18 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.BR
 import java.lang.Exception
 
 class UserRoomAdapter(
-    layoutId: Int,
-    recyclerView: RecyclerView,
-    layoutManager: LinearLayoutManager?,
-    adapterListener: BaseAdapter.AdapterListener?
+  layoutId: Int,
+  recyclerView: RecyclerView,
+  layoutManager: LinearLayoutManager?,
+  adapterListener: BaseAdapter.AdapterListener?
 ) : BaseAdapter(layoutId, recyclerView, layoutManager, adapterListener) {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        try {
-            val itemRoom = items[position]
-            holder.binding.setVariable(BR.viewModel, itemRoom)
-            holder.binding.executePendingBindings()
-        } catch (e: Exception) {}
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    try {
+      val itemRoom = items[position]
+      holder.binding.setVariable(BR.viewModel, itemRoom)
+      holder.binding.executePendingBindings()
+    } catch (e: Exception) {
     }
+  }
 }

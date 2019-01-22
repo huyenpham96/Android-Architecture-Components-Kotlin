@@ -11,21 +11,21 @@ import javax.inject.Singleton
 
 @Singleton
 class AppRepository @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
-    private val roomUserDataSource: RoomUserDataSource
+  private val remoteDataSource: RemoteDataSource,
+  private val roomUserDataSource: RoomUserDataSource
 ) : Repository {
-    override fun getAllUserSE(order: String, sort: String, site: String, page: Int): Observable<JsonObject> =
-        remoteDataSource.requestUserStackExchange(order, sort, site, page)
+  override fun getAllUserSE(order: String, sort: String, site: String, page: Int): Observable<JsonObject> =
+    remoteDataSource.requestUserStackExchange(order, sort, site, page)
 
-    override fun getUserCount(): Flowable<Int> =
-        roomUserDataSource.userDao().getUserCount()
+  override fun getUserCount(): Flowable<Int> =
+    roomUserDataSource.userDao().getUserCount()
 
-    override fun getAllUser(): Flowable<List<UserEntity>> =
-        roomUserDataSource.userDao().getAllUser()
+  override fun getAllUser(): Flowable<List<UserEntity>> =
+    roomUserDataSource.userDao().getAllUser()
 
-    override fun insertUser(userEntity: UserEntity) =
-        roomUserDataSource.userDao().insertUser(userEntity)
+  override fun insertUser(userEntity: UserEntity) =
+    roomUserDataSource.userDao().insertUser(userEntity)
 
-    override fun deleteUser(userEntity: UserEntity) =
-        roomUserDataSource.userDao().deleteUser(userEntity)
+  override fun deleteUser(userEntity: UserEntity) =
+    roomUserDataSource.userDao().deleteUser(userEntity)
 }

@@ -17,35 +17,35 @@ import javax.inject.Singleton
 
 @Module
 class RemoteModule {
-    @Provides
-    @Singleton
-    fun provideGson(): Gson = GsonBuilder().setLenient().create()
+  @Provides
+  @Singleton
+  fun provideGson(): Gson = GsonBuilder().setLenient().create()
 
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient =
-        OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.MINUTES)
-            .readTimeout(5, TimeUnit.MINUTES)
-            .writeTimeout(5, TimeUnit.MINUTES)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor { chain ->
-                val request: Request = chain.request().newBuilder().addHeader("", "").build()
-                chain.proceed(request)
-            }
-            .build()
+  @Provides
+  @Singleton
+  fun provideOkHttpClient(): OkHttpClient =
+    OkHttpClient.Builder()
+      .connectTimeout(5, TimeUnit.MINUTES)
+      .readTimeout(5, TimeUnit.MINUTES)
+      .writeTimeout(5, TimeUnit.MINUTES)
+      .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+      .addInterceptor { chain ->
+        val request: Request = chain.request().newBuilder().addHeader("", "").build()
+        chain.proceed(request)
+      }
+      .build()
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-            .build()
+  @Provides
+  @Singleton
+  fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
+    Retrofit.Builder()
+      .baseUrl(BuildConfig.BASE_URL)
+      .addConverterFactory(GsonConverterFactory.create(gson))
+      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+      .client(okHttpClient)
+      .build()
 
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+  @Provides
+  @Singleton
+  fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 }

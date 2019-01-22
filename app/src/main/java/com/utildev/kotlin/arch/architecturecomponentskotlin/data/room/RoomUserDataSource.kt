@@ -9,10 +9,10 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.data.room.model.User
 
 @Database(entities = [UserEntity::class], version = 1)
 abstract class RoomUserDataSource : RoomDatabase() {
-    abstract fun userDao(): RoomUserDao
+  abstract fun userDao(): RoomUserDao
 
-    companion object {
-        fun createUserDB(context: Context): RoomUserDataSource =
-            Room.databaseBuilder(context, RoomUserDataSource::class.java, DB_NAME).build()
-    }
+  companion object {
+    fun createUserDB(context: Context): RoomUserDataSource =
+      Room.databaseBuilder(context, RoomUserDataSource::class.java, DB_NAME).build()
+  }
 }

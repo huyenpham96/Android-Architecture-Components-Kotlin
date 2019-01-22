@@ -19,29 +19,29 @@ private val requestOptions = RequestOptions().transform(CircleCrop())
 @SuppressLint("CheckResult")
 @BindingAdapter("imageUrl", "progressBar")
 fun loadImage(imageView: ImageView, url: String, progressBar: ProgressBar) {
-    Glide.with(imageView.context)
-        .load(url)
-        .apply(requestOptions)
-        .listener(object : RequestListener<Drawable> {
-            override fun onResourceReady(
-                resource: Drawable?, model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar.visibility = View.GONE
-                return false
-            }
+  Glide.with(imageView.context)
+    .load(url)
+    .apply(requestOptions)
+    .listener(object : RequestListener<Drawable> {
+      override fun onResourceReady(
+        resource: Drawable?, model: Any?,
+        target: Target<Drawable>?,
+        dataSource: DataSource?,
+        isFirstResource: Boolean
+      ): Boolean {
+        progressBar.visibility = View.GONE
+        return false
+      }
 
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar.visibility = View.GONE
-                return false
-            }
-        })
-        .into(imageView)
+      override fun onLoadFailed(
+        e: GlideException?,
+        model: Any?,
+        target: Target<Drawable>?,
+        isFirstResource: Boolean
+      ): Boolean {
+        progressBar.visibility = View.GONE
+        return false
+      }
+    })
+    .into(imageView)
 }

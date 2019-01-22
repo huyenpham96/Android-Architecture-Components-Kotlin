@@ -13,59 +13,59 @@ import javax.inject.Inject
 @Suppress("LeakingThis")
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
-    @Inject
-    lateinit var mySharedPreferences: MySharedPreferences
+  @Inject
+  lateinit var mySharedPreferences: MySharedPreferences
 
-    init {
-        MyApplication.appComponent.inject(this)
-    }
+  init {
+    MyApplication.appComponent.inject(this)
+  }
 
-    private fun transactionFragment(
-        fragment: BaseFragment,
-        replace: Boolean,
-        addToBackStack: Boolean,
-        animation: Boolean
-    ) {
-        if (supportFragmentManager != null) {
-            val fmTransaction = supportFragmentManager.beginTransaction()
-            if (animation) {
-                fmTransaction.setCustomAnimations(
-                    R.anim.activity_new_in, R.anim.activity_old_out,
-                    R.anim.activity_old_in, R.anim.activity_new_out
-                )
-            } else {
-                fmTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-            }
-            if (replace) {
-                fmTransaction.replace(R.id.flContainer, fragment, fragment::class.java.simpleName)
-            } else {
-                val currentFm = supportFragmentManager.findFragmentById(R.id.flContainer) as BaseFragment?
-                if (currentFm != null) {
-                    fmTransaction.hide(currentFm)
-                }
-                fmTransaction.add(R.id.flContainer, fragment, fragment::class.java.simpleName)
-            }
-            if (addToBackStack) {
-                fmTransaction.addToBackStack(fragment::class.java.simpleName)
-            }
-            fmTransaction.commit()
+  private fun transactionFragment(
+    fragment: BaseFragment,
+    replace: Boolean,
+    addToBackStack: Boolean,
+    animation: Boolean
+  ) {
+    if (supportFragmentManager != null) {
+      val fmTransaction = supportFragmentManager.beginTransaction()
+      if (animation) {
+        fmTransaction.setCustomAnimations(
+          R.anim.activity_new_in, R.anim.activity_old_out,
+          R.anim.activity_old_in, R.anim.activity_new_out
+        )
+      } else {
+        fmTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+      }
+      if (replace) {
+        fmTransaction.replace(R.id.flContainer, fragment, fragment::class.java.simpleName)
+      } else {
+        val currentFm = supportFragmentManager.findFragmentById(R.id.flContainer) as BaseFragment?
+        if (currentFm != null) {
+          fmTransaction.hide(currentFm)
         }
+        fmTransaction.add(R.id.flContainer, fragment, fragment::class.java.simpleName)
+      }
+      if (addToBackStack) {
+        fmTransaction.addToBackStack(fragment::class.java.simpleName)
+      }
+      fmTransaction.commit()
     }
+  }
 
-    fun replaceFragment(fragment: BaseFragment, addToBackStack: Boolean, animation: Boolean) =
-        transactionFragment(fragment, true, addToBackStack, animation)
+  fun replaceFragment(fragment: BaseFragment, addToBackStack: Boolean, animation: Boolean) =
+    transactionFragment(fragment, true, addToBackStack, animation)
 
-    fun addFragment(fragment: BaseFragment, addToBackStack: Boolean, animation: Boolean) =
-        transactionFragment(fragment, false, addToBackStack, animation)
+  fun addFragment(fragment: BaseFragment, addToBackStack: Boolean, animation: Boolean) =
+    transactionFragment(fragment, false, addToBackStack, animation)
 
-    fun clearAllStack() {
-        val fmCount = supportFragmentManager.backStackEntryCount
-        for (i in 0..fmCount) {
-            supportFragmentManager.popBackStack()
-        }
+  fun clearAllStack() {
+    val fmCount = supportFragmentManager.backStackEntryCount
+    for (i in 0..fmCount) {
+      supportFragmentManager.popBackStack()
     }
+  }
 
-    fun clearStack() {
-        supportFragmentManager.popBackStack()
-    }
+  fun clearStack() {
+    supportFragmentManager.popBackStack()
+  }
 }

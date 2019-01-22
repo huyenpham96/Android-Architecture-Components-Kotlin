@@ -19,80 +19,80 @@ import kotlinx.android.synthetic.main.fragment_remote.view.*
 import kotlinx.android.synthetic.main.view_list.view.*
 
 class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
-    private lateinit var viewModel: RemoteViewModel
-    private lateinit var rootView: View
-    private var userRemoteAdapter: UserRemoteAdapter? = null
-    private lateinit var linearLayoutManager: LinearLayoutManager
+  private lateinit var viewModel: RemoteViewModel
+  private lateinit var rootView: View
+  private var userRemoteAdapter: UserRemoteAdapter? = null
+  private lateinit var linearLayoutManager: LinearLayoutManager
 
-    private var list: MutableList<RestItem> = ArrayList()
+  private var list: MutableList<RestItem> = ArrayList()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentRemoteBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_remote, container, false)
-        viewModel = ViewModelProviders.of(this).get(RemoteViewModel::class.java)
-        binding.viewModel = viewModel
-        rootView = binding.root
-        init()
-        return rootView
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val binding: FragmentRemoteBinding =
+      DataBindingUtil.inflate(inflater, R.layout.fragment_remote, container, false)
+    viewModel = ViewModelProviders.of(this).get(RemoteViewModel::class.java)
+    binding.viewModel = viewModel
+    rootView = binding.root
+    init()
+    return rootView
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    view.fragRemote_list.viewList_rvContent.run {
+      layoutManager = linearLayoutManager
+      setHasFixedSize(true)
+      adapter = userRemoteAdapter
+    }
+  }
+
+  private fun init() {
+    linearLayoutManager = GridLayoutManager(context, 1)
+    if (userRemoteAdapter == null) {
+      userRemoteAdapter = UserRemoteAdapter(
+        R.layout.item_user, rootView.fragRemote_list.viewList_rvContent, linearLayoutManager, this
+      )
+      if (viewModel.userListSE == null) {
+        viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
+      } else {
+        list.addAll(viewModel.storeList)
+        userRemoteAdapter!!.isLoading = true
+        userRemoteAdapter!!.set(list)
+      }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.fragRemote_list.viewList_rvContent.run {
-            layoutManager = linearLayoutManager
-            setHasFixedSize(true)
-            adapter = userRemoteAdapter
-        }
+    rootView.fragRemote_list.viewList_srLayout.setOnRefreshListener {
+      viewModel.page = 1
+      viewModel.storeList.clear()
+      list.clear()
+      userRemoteAdapter!!.set(list)
+      userRemoteAdapter!!.isEndList = false
+      viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
+      rootView.fragRemote_list.viewList_srLayout.isRefreshing = false
     }
 
-    private fun init() {
-        linearLayoutManager = GridLayoutManager(context, 1)
-        if (userRemoteAdapter == null) {
-            userRemoteAdapter = UserRemoteAdapter(
-                R.layout.item_user, rootView.fragRemote_list.viewList_rvContent, linearLayoutManager, this
-            )
-            if (viewModel.userListSE == null) {
-                viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
-            } else {
-                list.addAll(viewModel.storeList)
-                userRemoteAdapter!!.isLoading = true
-                userRemoteAdapter!!.set(list)
-            }
-        }
+    viewModel.userListSE?.observe(this, Observer {
+      if (it != null) {
+        list.clear()
+        list.addAll(it)
+        userRemoteAdapter!!.isLoading = true
+        userRemoteAdapter!!.set(list)
+      }
+    })
+  }
 
-        rootView.fragRemote_list.viewList_srLayout.setOnRefreshListener {
-            viewModel.page = 1
-            viewModel.storeList.clear()
-            list.clear()
-            userRemoteAdapter!!.set(list)
-            userRemoteAdapter!!.isEndList = false
-            viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", viewModel.page, true)
-            rootView.fragRemote_list.viewList_srLayout.isRefreshing = false
-        }
+  override fun onItemClick(`object`: Any) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
-        viewModel.userListSE?.observe(this, Observer {
-            if (it != null) {
-                list.clear()
-                list.addAll(it)
-                userRemoteAdapter!!.isLoading = true
-                userRemoteAdapter!!.set(list)
-            }
-        })
+  override fun onItemLongClick(`object`: Any): Boolean {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onLoadMore() {
+    if (list.size < 100) {
+      viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++viewModel.page, false)
+    } else {
+      userRemoteAdapter!!.isEndList = true
     }
-
-    override fun onItemClick(`object`: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onItemLongClick(`object`: Any): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onLoadMore() {
-        if (list.size < 100) {
-            viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++viewModel.page, false)
-        } else {
-            userRemoteAdapter!!.isEndList = true
-        }
-    }
+  }
 }

@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Module
 class RoomModule {
-    @Provides
-    @Singleton
-    fun provideRoomDataSource(context: Context) = RoomUserDataSource.createUserDB(context)
+  @Provides
+  @Singleton
+  fun provideRoomDataSource(context: Context) = RoomUserDataSource.createUserDB(context)
 }

@@ -7,10 +7,10 @@ import com.utildev.kotlin.arch.architecturecomponentskotlin.common.extensions.TA
 
 @Entity(tableName = TABLE_NAME)
 data class UserEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long,
-    @ColumnInfo(name = "name")
-    var name: String?,
-    @ColumnInfo(name = "job")
-    var job: String?
+  @PrimaryKey(autoGenerate = true)
+  val id: Long,
+  @ColumnInfo(name = "name")
+  var name: String?,
+  @ColumnInfo(name = "job")
+  var job: String?
 )
