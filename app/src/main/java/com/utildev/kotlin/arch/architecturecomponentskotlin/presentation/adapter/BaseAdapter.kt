@@ -13,7 +13,7 @@ open class BaseAdapter(
   recyclerView: RecyclerView,
   private val layoutManager: LinearLayoutManager?,
   private val adapterListener: BaseAdapter.AdapterListener?
-) : RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   internal var items: MutableList<Any> = ArrayList()
   var isLoading = true
   var isEndList = false
@@ -57,8 +57,7 @@ open class BaseAdapter(
 
   override fun getItemViewType(position: Int): Int {
     return if (layoutManager != null) {
-      when (//                layoutManager.itemCount <= 1 -> VIEW_TYPE_NOTHING
-        position) {
+      when (position) {
         layoutManager.itemCount - 1 -> VIEW_TYPE_LOADING
         else -> position
       }
@@ -67,19 +66,14 @@ open class BaseAdapter(
     }
   }
 
-  override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+  override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return when (viewType) {
-//            VIEW_TYPE_NOTHING -> BaseAdapter.ViewHolder(
-//                DataBindingUtil.inflate(
-//                    LayoutInflater.from(viewGroup.context), R.layout.view_blank, viewGroup, false
-//                )
-//            )
-      VIEW_TYPE_LOADING -> BaseAdapter.ViewHolder(
+      VIEW_TYPE_LOADING -> BaseAdapter.LoadingViewHolder(
         DataBindingUtil.inflate(
           LayoutInflater.from(viewGroup.context), R.layout.view_loadmore, viewGroup, false
         )
       )
-      else -> BaseAdapter.ViewHolder(
+      else -> BaseAdapter.ItemViewHolder(
         DataBindingUtil.inflate(
           LayoutInflater.from(viewGroup.context), layoutId, viewGroup, false
         )
@@ -87,7 +81,7 @@ open class BaseAdapter(
     }
   }
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
   }
 
   fun addAll(any: List<Any>) {
@@ -115,7 +109,9 @@ open class BaseAdapter(
     notifyDataSetChanged()
   }
 
-  class ViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
+  class ItemViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
+
+  class LoadingViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
   interface AdapterListener {
     fun onItemClick(`object`: Any)

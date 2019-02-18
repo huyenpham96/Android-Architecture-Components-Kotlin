@@ -72,10 +72,14 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
 
     viewModel.userListSE?.observe(this, Observer {
       if (it != null) {
-        list.clear()
-        list.addAll(it)
-        userRemoteAdapter!!.isLoading = true
-        userRemoteAdapter!!.set(list)
+        if (it.size == 0) {
+          // TODO: end list -> remove load more
+        } else {
+          list.clear()
+          list.addAll(it)
+          userRemoteAdapter!!.isLoading = true
+          userRemoteAdapter!!.set(list)
+        }
       }
     })
   }
@@ -92,7 +96,9 @@ class RemoteFragment : BaseFragment(), BaseAdapter.AdapterListener {
     if (list.size < 100) {
       viewModel.getUserStackExchange("desc", "reputation", "stackoverflow", ++viewModel.page, false)
     } else {
+      // TODO: demo end list
       userRemoteAdapter!!.isEndList = true
+      userRemoteAdapter!!.notifyDataSetChanged()
     }
   }
 }

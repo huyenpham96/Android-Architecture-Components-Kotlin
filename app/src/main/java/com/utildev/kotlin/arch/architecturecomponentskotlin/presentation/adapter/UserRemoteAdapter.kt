@@ -1,10 +1,12 @@
 package com.utildev.kotlin.arch.architecturecomponentskotlin.presentation.adapter
 
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.utildev.kotlin.arch.architecturecomponentskotlin.BR
 import kotlinx.android.synthetic.main.item_user.view.*
+import kotlinx.android.synthetic.main.view_loading.view.*
 import kotlinx.android.synthetic.main.view_loadmore.view.*
 import java.lang.Exception
 
@@ -15,8 +17,8 @@ class UserRemoteAdapter(
   adapterListener: BaseAdapter.AdapterListener?
 ) : BaseAdapter(layoutId, recyclerView, layoutManager, adapterListener) {
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    try {
+  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    if (holder is ItemViewHolder) {
       val restItem = items[position]
       holder.binding.setVariable(BR.viewModel, restItem)
       holder.binding.executePendingBindings()
@@ -26,8 +28,19 @@ class UserRemoteAdapter(
       } else {
         view.itemUser_decorator.visibility = View.VISIBLE
       }
-    } catch (e: Exception) {
-      holder.binding.root.viewLoadMore.visibility = if (isEndList) View.GONE else View.VISIBLE
+    } else if (holder is LoadingViewHolder) {
+      if (isEndList) {
+        Handler().postDelayed({
+          holder.binding.root.viewLoadMore.visibility = View.GONE
+        }, 1000)
+      } else {
+        holder.binding.root.viewLoadMore.visibility = View.VISIBLE
+      }
     }
+//    try {
+//
+//    } catch (e: Exception) {
+//      holder.binding.root.viewLoadMore.visibility = if (isEndList) View.GONE else View.VISIBLE
+//    }
   }
 }

@@ -25,14 +25,14 @@ class RemoteModule {
   @Singleton
   fun provideOkHttpClient(): OkHttpClient =
     OkHttpClient.Builder()
-      .connectTimeout(5, TimeUnit.MINUTES)
-      .readTimeout(5, TimeUnit.MINUTES)
-      .writeTimeout(5, TimeUnit.MINUTES)
+      .connectTimeout(1, TimeUnit.MINUTES)
+      .readTimeout(1, TimeUnit.MINUTES)
+      .writeTimeout(1, TimeUnit.MINUTES)
       .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-      .addInterceptor { chain ->
-        val request: Request = chain.request().newBuilder().addHeader("", "").build()
-        chain.proceed(request)
-      }
+//      .addInterceptor { chain ->
+//        val request: Request = chain.request().newBuilder().addHeader("", "").build()
+//        chain.proceed(request)
+//      }
       .build()
 
   @Provides

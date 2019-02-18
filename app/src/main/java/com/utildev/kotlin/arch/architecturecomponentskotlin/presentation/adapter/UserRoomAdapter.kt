@@ -12,12 +12,15 @@ class UserRoomAdapter(
   adapterListener: BaseAdapter.AdapterListener?
 ) : BaseAdapter(layoutId, recyclerView, layoutManager, adapterListener) {
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    try {
+  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    if (holder is ItemViewHolder) {
       val itemRoom = items[position]
       holder.binding.setVariable(BR.viewModel, itemRoom)
       holder.binding.executePendingBindings()
-    } catch (e: Exception) {
     }
+//    try {
+//
+//    } catch (e: Exception) {
+//    }
   }
 }
